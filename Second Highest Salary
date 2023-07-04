@@ -66,4 +66,8 @@ Summary :
 
 Solution:
 
-SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < ( SELECT MAX(salary) as SecondHighestSalary FROM Employee ORDER BY salary DESC);
+1. SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < ( SELECT MAX(salary) as SecondHighestSalary FROM Employee ORDER BY salary DESC);
+
+2. SELECT(SELECT DISTINCT Salary FROM Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1)AS SecondHighestSalary;
