@@ -61,3 +61,20 @@ Output:
 Explanation: 
 There is no address in the address table for the personId = 1 so we return null in their city and state.
 addressId = 1 contains information about the address of personId = 2.
+
+
+Summarizing the Problem
+1. We have two tables: "Person" and "Address." The "Person" table contains information about people, including their ID, last name, and first name. The "Address" table contains information about the address of each person, including their ID, city, and state.
+
+2. Our goal is to create an SQL query that combines the information from both tables and reports the first name, last name, city, and state of each person. We want to include all the people from the "Person" table, even if their address is not present in the "Address" table.
+
+3. If a person's address is not present in the "Address" table, we should report "null" for their city and state.
+
+4. The order of the output doesn't matter, so we can return the result table in any order.
+
+
+Solution :
+
+1. select p.firstName , p.lastName, a.city , a.state from Person p LEFT JOIN Address a on p.personId  = a.personId 
+
+2. select p.firstName , p.lastName, a.city , a.state from Person p LEFT JOIN Address a USING(personId) 
