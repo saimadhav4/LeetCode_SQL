@@ -1,0 +1,71 @@
+182. Duplicate Emails
+
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| email       | varchar |
++-------------+---------+
+id is the primary key column for this table.
+Each row of this table contains an email. The emails will not contain uppercase letters.
+ 
+
+Write an SQL query to report all the duplicate emails. Note that it's guaranteed that the email field is not NULL.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Person table:
++----+---------+
+| id | email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+Output: 
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+Explanation: a@b.com is repeated two times.
+
+
+Summary :
+
+1. We have a table called "Person" that contains information about individuals. Each row represents a person and includes an ID and an email.
+
+2. The goal is to write an SQL query that reports all the duplicate emails found in the "Person" table. We need to identify the emails that appear more than once.
+
+3. The result table should contain a single column named "Email" and include the duplicate email addresses.
+
+4. The order of the output doesn't matter, so we can return the result table in any order.
+
+Solutions :
+
+1. 
+
+SELECT DISTINCT(p1.email) from 
+Person p1 JOIN Person p2 ON
+p1.email = p2.email AND p1.id <> p2.id;
+
+2.
+
+SELECT email as Email
+FROM Person
+GROUP BY email
+HAVING count(*) > 1
+
+3.
+
+SELECT DISTINCT(p1.email) from Person p1, Person p2
+where p1.id <> p2.id AND p1.email = p2.email;
