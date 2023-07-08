@@ -56,13 +56,13 @@ Output:
 
 Summary :
 
-1. The problem involves two tables: "Person" and "Address." The "Person" table contains information about individuals, including their ID, last name, and first name. The "Address" table contains information about the address of each person, including their ID, city, and state.
+1. We have a table called "Employee" that contains information about employees. Each row represents an employee and includes an ID and a salary.
 
-2. The goal is to write an SQL query that combines the information from both tables and reports the first name, last name, city, and state of each person. We want to include all the people from the "Person" table, even if their address is not present in the "Address" table.
+2. The goal is to find the nth highest salary from the "Employee" table. The value of "n" will be given as input.
 
-3. If a person's address is not found in the "Address" table, we should report "null" for their city and state in the output.
+3. If there is no nth highest salary (e.g., when there are fewer than n distinct salaries in the table), we should return "null" as the result.
 
-4. The order of the output doesn't matter, so the result table can be returned in any order.
+4. The result format should be a table with a single column named "getNthHighestSalary(n)" (where n is the given input) and one row that contains the value of the nth highest salary.
 
 
 Solution:
