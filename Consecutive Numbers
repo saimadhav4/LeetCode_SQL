@@ -1,0 +1,82 @@
+180. Consecutive Numbers
+
+Table: Logs
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| num         | varchar |
++-------------+---------+
+id is the primary key for this table.
+id is an autoincrement column.
+ 
+
+Write an SQL query to find all numbers that appear at least three times consecutively.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Logs table:
++----+-----+
+| id | num |
++----+-----+
+| 1  | 1   |
+| 2  | 1   |
+| 3  | 1   |
+| 4  | 2   |
+| 5  | 1   |
+| 6  | 2   |
+| 7  | 2   |
++----+-----+
+Output: 
++-----------------+
+| ConsecutiveNums |
++-----------------+
+| 1               |
++-----------------+
+Explanation: 1 is the only number that appears consecutively for at least three times.
+
+Summary :
+
+1. We have a table called "Logs" that contains information about logs. Each row represents a log entry and includes an ID and a number.
+
+2. The goal is to write an SQL query that finds all the numbers that appear at least three times consecutively in the "Logs" table. This means we are looking for numbers that occur three or more times in a row without any other numbers in between.
+
+3. The result table should contain a single column named "ConsecutiveNums" and include all the numbers that satisfy the condition.
+
+4. The order of the output doesn't matter, so we can return the result table in any order.
+
+Solutions :
+
+1.
+
+SELECT distinct Num as ConsecutiveNums
+FROM Logs
+WHERE (Id + 1, Num) in (select * from Logs) and (Id + 2, Num) in (select * from Logs)
+
+2. Using lead
+
+Select distinct temp.num as ConsecutiveNums 
+from (
+    Select num, lead(num) over (order by id) as one_jump_num,
+    lead(num, 2) over (order by id) as two_jump_num
+    from logs
+) as temp
+where temp.num = temp.one_jump_num and temp.num = temp.two_jump_num;
+
+3. Using Lead and Lag
+
+Select distinct temp.num as ConsecutiveNums 
+from (
+    Select num, lead(num) over (order by id) as next_num,
+    lag(num) over (order by id) as prev_num
+    from logs
+) as temp
+where temp.num = temp.next_num and temp.num = temp.prev_num;
