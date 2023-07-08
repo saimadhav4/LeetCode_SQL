@@ -1,0 +1,90 @@
+177. Nth Highest Salary(https://leetcode.com/problems/nth-highest-salary/description/)
+
+Table: Employee
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| salary      | int  |
++-------------+------+
+id is the primary key column for this table.
+Each row of this table contains information about the salary of an employee.
+ 
+
+Find the nth highest salary from the Employee table. If there is no nth highest salary, return null.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+n = 2
+Output: 
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| 200                    |
++------------------------+
+Example 2:
+
+Input: 
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
++----+--------+
+n = 2
+Output: 
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| null                   |
++------------------------+
+
+
+Summary :
+
+1. The problem involves two tables: "Person" and "Address." The "Person" table contains information about individuals, including their ID, last name, and first name. The "Address" table contains information about the address of each person, including their ID, city, and state.
+
+2. The goal is to write an SQL query that combines the information from both tables and reports the first name, last name, city, and state of each person. We want to include all the people from the "Person" table, even if their address is not present in the "Address" table.
+
+3. If a person's address is not found in the "Address" table, we should report "null" for their city and state in the output.
+
+4. The order of the output doesn't matter, so the result table can be returned in any order.
+
+
+Solution:
+
+1. 
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+DECLARE M INT;
+SET M = N-1;
+  RETURN (
+    IFNULL((SELECT DISTINCT salary FROM Employee ORDER BY salary DESC LIMIT M, 1),NULL)
+      
+       );
+END
+
+2. 
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+SET N = N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT DISTINCT(salary) from Employee order by salary DESC
+      LIMIT 1 OFFSET N
+  );
+END
