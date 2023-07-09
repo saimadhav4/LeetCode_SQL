@@ -1,0 +1,93 @@
+184. Department Highest Salary
+
+Table: Employee
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| id           | int     |
+| name         | varchar |
+| salary       | int     |
+| departmentId | int     |
++--------------+---------+
+id is the primary key column for this table.
+departmentId is a foreign key of the ID from the Department table.
+Each row of this table indicates the ID, name, and salary of an employee. It also contains the ID of their department.
+ 
+
+Table: Department
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key column for this table. It is guaranteed that department name is not NULL.
+Each row of this table indicates the ID of a department and its name.
+ 
+
+Find employees who have the highest salary in each of the departments.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++----+-------+--------+--------------+
+| id | name  | salary | departmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Jim   | 90000  | 1            |
+| 3  | Henry | 80000  | 2            |
+| 4  | Sam   | 60000  | 2            |
+| 5  | Max   | 90000  | 1            |
++----+-------+--------+--------------+
+Department table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | IT    |
+| 2  | Sales |
++----+-------+
+Output: 
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Jim      | 90000  |
+| Sales      | Henry    | 80000  |
+| IT         | Max      | 90000  |
++------------+----------+--------+
+Explanation: Max and Jim both have the highest salary in the IT department and Henry has the highest salary in the Sales department.
+
+
+Summary :
+
+1. We have two tables: "Employee" and "Department." The "Employee" table contains information about employees, including their ID, name, salary, and department ID. The "Department" table contains information about departments, including their ID and name.
+
+2. The goal is to write an SQL query that finds the employees who have the highest salary in each department. We need to identify the employee with the highest salary for each unique department.
+
+3. The result table should contain three columns: "Department," "Employee," and "Salary." It should include the name of the department, the name of the employee with the highest salary in that department, and their salary.
+
+4. The order of the output doesn't matter, so we can return the result table in any order.
+
+
+Solutions :
+
+1.
+
+SELECT Department,e.name as Employee,e.salary as Salary 
+FROM employee e,
+(
+    SELECT d.id department_id,d.name as Department,max(e.salary) as max 
+    FROM department d LEFT JOIN employee e 
+    ON  d.id=e.departmentId 
+    GROUP BY d.id
+) as MaxSalaries 
+WHERE e.departmentId=department_id and e.salary = max;
+
