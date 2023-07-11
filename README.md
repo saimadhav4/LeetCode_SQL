@@ -1,14 +1,22 @@
-# LeetCode_SQL
-These are the SQL questions available in LeetCode
-https://leetcode.com/list/e97a9e5m/
+# LeetCode SQL Questions
 
+This repository contains SQL questions available on LeetCode. You can find the questions at [LeetCode SQL Problems](https://leetcode.com/list/e97a9e5m/).
 
-File Format :
+## File Format
 
-Problem Number. Problem Title (Problem URL)
+Each problem is organized in the following format:
 
-Problem Statement
+### Problem Number. Problem Title (Problem URL)
 
-Summary
+#### Problem Statement
 
-Solutions
+[Link to Problem Statement](Problem URL)
+
+#### Summary
+
+A brief summary of the problem statement.
+
+#### Solutions
+
+Solutions to the problem implemented using different approaches
+
