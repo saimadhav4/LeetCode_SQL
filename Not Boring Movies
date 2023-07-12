@@ -1,0 +1,69 @@
+620. Not Boring Movies (https://leetcode.com/problems/not-boring-movies/?envType=list&envId=e97a9e5m)
+
+Table: Cinema
+
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| id             | int      |
+| movie          | varchar  |
+| description    | varchar  |
+| rating         | float    |
++----------------+----------+
+id is the primary key for this table.
+Each row contains information about the name of a movie, its genre, and its rating.
+rating is a 2 decimal places float in the range [0, 10]
+ 
+
+Write an SQL query to report the movies with an odd-numbered ID and a description that is not "boring".
+
+Return the result table ordered by rating in descending order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Cinema table:
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 1  | War        | great 3D    | 8.9    |
+| 2  | Science    | fiction     | 8.5    |
+| 3  | irish      | boring      | 6.2    |
+| 4  | Ice song   | Fantacy     | 8.6    |
+| 5  | House card | Interesting | 9.1    |
++----+------------+-------------+--------+
+Output: 
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 5  | House card | Interesting | 9.1    |
+| 1  | War        | great 3D    | 8.9    |
++----+------------+-------------+--------+
+Explanation: 
+We have three movies with odd-numbered IDs: 1, 3, and 5. The movie with ID = 3 is boring so we do not include it in the answer.
+
+
+Summary :
+
+1. We have a table called "Cinema" that contains information about movies. The table has four columns: "id," "movie," "description," and "rating." Each row represents a movie and provides details such as the movie's ID, name, description, and rating.
+
+2. The goal is to report the movies that satisfy two conditions:
+
+      a. The movie's ID must be odd-numbered.
+      b. The movie's description must not be "boring."
+
+3. To solve the problem, we need to analyze the data in the "Cinema" table. We check the values in the "id" and "description" columns to identify movies that meet the specified conditions.
+
+4. The expected output is a result table that contains the ID, movie name, description, and rating of the movies that satisfy the conditions. The result table should be ordered by the rating in descending order.
+
+
+Solutions :
+
+SELECT id, movie, description, rating 
+FROM cinema 
+WHERE id % 2 = 1 AND description != 'boring' 
+ORDER BY rating DESC;
