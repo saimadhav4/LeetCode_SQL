@@ -1,0 +1,112 @@
+608. Tree Node (https://leetcode.com/problems/tree-node/?envType=list&envId=e97a9e5m)
+
+Table: Tree
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| p_id        | int  |
++-------------+------+
+id is the primary key column for this table.
+Each row of this table contains information about the id of a node and the id of its parent node in a tree.
+The given structure is always a valid tree.
+ 
+
+Each node in the tree can be one of three types:
+
+"Leaf": if the node is a leaf node.
+"Root": if the node is the root of the tree.
+"Inner": If the node is neither a leaf node nor a root node.
+Write an SQL query to report the type of each node in the tree.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+
+Input: 
+Tree table:
++----+------+
+| id | p_id |
++----+------+
+| 1  | null |
+| 2  | 1    |
+| 3  | 1    |
+| 4  | 2    |
+| 5  | 2    |
++----+------+
+Output: 
++----+-------+
+| id | type  |
++----+-------+
+| 1  | Root  |
+| 2  | Inner |
+| 3  | Leaf  |
+| 4  | Leaf  |
+| 5  | Leaf  |
++----+-------+
+Explanation: 
+Node 1 is the root node because its parent node is null and it has child nodes 2 and 3.
+Node 2 is an inner node because it has parent node 1 and child node 4 and 5.
+Nodes 3, 4, and 5 are leaf nodes because they have parent nodes and they do not have child nodes.
+Example 2:
+
+
+Input: 
+Tree table:
++----+------+
+| id | p_id |
++----+------+
+| 1  | null |
++----+------+
+Output: 
++----+-------+
+| id | type  |
++----+-------+
+| 1  | Root  |
++----+-------+
+Explanation: If there is only one node on the tree, you only need to output its root attributes.
+
+
+Summary :
+
+1. We have a table called "Tree" that represents a tree structure. The table has two columns: "id" and "p_id." Each row in the table contains information about a node in the tree, including the ID of the node and the ID of its parent node.
+
+2. The goal is to determine the type of each node in the tree. There are three possible types of nodes:
+
+      a. "Leaf": If the node is a leaf node, meaning it does not have any child nodes.
+      b. "Root": If the node is the root of the tree, meaning it does not have a parent node.
+      c. "Inner": If the node is neither a leaf node nor a root node, meaning it has a parent node and possibly child nodes.
+
+3. To solve the problem, we need to analyze the data in the "Tree" table. We examine the relationship between nodes using the "id" and "p_id" columns. By identifying which nodes are roots, leaves, or inner nodes, we can determine the type of each node.
+
+4. The expected output is a result table that contains the ID and type of each node in the tree. The order of the rows in the result table does not matter.
+
+
+Solutions :
+
+1. 
+
+SELECT id,case
+WHEN p_id IS NULL THEN 'Root'
+WHEN id IN (SELECT p_id FROM tree) AND p_id IN (SELECT id FROM tree) THEN 'Inner'
+ELSE 'Leaf'
+end AS type
+FROM Tree
+
+
+2. Using Case
+
+SELECT id,
+
+    CASE 
+        WHEN p_id IS NULL THEN 'Root'
+        WHEN id IN (SELECT p_id FROM Tree) THEN 'Inner'
+        ELSE 'Leaf'
+        END AS type
+ FROM Tree
