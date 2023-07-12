@@ -1,0 +1,80 @@
+596. Classes More Than 5 Students (https://leetcode.com/problems/classes-more-than-5-students/?envType=list&envId=e97a9e5m)
+
+Table: Courses
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| student     | varchar |
+| class       | varchar |
++-------------+---------+
+(student, class) is the primary key column for this table.
+Each row of this table indicates the name of a student and the class in which they are enrolled.
+ 
+
+Find all the classes that have at least five students.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Courses table:
++---------+----------+
+| student | class    |
++---------+----------+
+| A       | Math     |
+| B       | English  |
+| C       | Math     |
+| D       | Biology  |
+| E       | Math     |
+| F       | Computer |
+| G       | Math     |
+| H       | Math     |
+| I       | Math     |
++---------+----------+
+Output: 
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+Explanation: 
+- Math has 6 students, so we include it.
+- English has 1 student, so we do not include it.
+- Biology has 1 student, so we do not include it.
+- Computer has 1 student, so we do not include it.
+
+
+Summary :
+
+1. We have a table called "Courses" that contains information about students and the classes they are enrolled in. The table has two columns: "student" and "class." 
+    Each row represents a student and their corresponding class. The combination of "student" and "class" is the primary key, meaning each pair is unique in the table.
+
+2. The goal is to find all the classes that have at least five students. We want to identify the classes that are popular and have a significant number of students enrolled.
+
+3. To solve the problem, we need to analyze the data in the "Courses" table. We count the number of students for each class and check if the count is at least five. 
+    If it is, we include that class in the result.
+
+4. The expected output is a result table that contains the names of the classes with at least five students. The order of the classes in the result table does not matter.
+
+
+Solutions :
+
+1. Using Group By
+
+SELECT class FROM courses
+GROUP BY class HAVING COUNT(DISTINCT student) >= 5;
+
+2. Using Sub Query
+
+SELECT class
+FROM 
+    (SELECT class, COUNT(DISTINCT student) AS num
+    FROM courses
+    GROUP BY class) AS cls
+WHERE num >= 5;
