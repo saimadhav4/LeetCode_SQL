@@ -1,0 +1,83 @@
+1141. User Activity for the Past 30 Days I (https://leetcode.com/problems/user-activity-for-the-past-30-days-i/?envType=list&envId=e97a9e5m)
+
+
+Table: Activity
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| user_id       | int     |
+| session_id    | int     |
+| activity_date | date    |
+| activity_type | enum    |
++---------------+---------+
+There is no primary key for this table, it may have duplicate rows.
+The activity_type column is an ENUM of type ('open_session', 'end_session', 'scroll_down', 'send_message').
+The table shows the user activities for a social media website. 
+Note that each session belongs to exactly one user.
+ 
+
+Write an SQL query to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. A user was active on someday if they made at least one activity on that day.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Activity table:
++---------+------------+---------------+---------------+
+| user_id | session_id | activity_date | activity_type |
++---------+------------+---------------+---------------+
+| 1       | 1          | 2019-07-20    | open_session  |
+| 1       | 1          | 2019-07-20    | scroll_down   |
+| 1       | 1          | 2019-07-20    | end_session   |
+| 2       | 4          | 2019-07-20    | open_session  |
+| 2       | 4          | 2019-07-21    | send_message  |
+| 2       | 4          | 2019-07-21    | end_session   |
+| 3       | 2          | 2019-07-21    | open_session  |
+| 3       | 2          | 2019-07-21    | send_message  |
+| 3       | 2          | 2019-07-21    | end_session   |
+| 4       | 3          | 2019-06-25    | open_session  |
+| 4       | 3          | 2019-06-25    | end_session   |
++---------+------------+---------------+---------------+
+Output: 
++------------+--------------+ 
+| day        | active_users |
++------------+--------------+ 
+| 2019-07-20 | 2            |
+| 2019-07-21 | 2            |
++------------+--------------+ 
+Explanation: Note that we do not care about days with zero active users.
+
+
+Summary :
+
+1. We have a table called "Activity" that contains information about user activities on a social media website. The table has four columns: "user_id," "session_id," "activity_date," and "activity_type." Each row represents an activity of a user, including the user ID, session ID, date of the activity, and the type of activity.
+
+2. The goal is to find the daily active user count for a period of 30 days ending on 2019-07-27, inclusive. We want to determine the number of unique users who were active on each day within that period. A user is considered active on a day if they have at least one activity on that day.
+
+3. To solve the problem, we need to analyze the data in the "Activity" table. We will look at the "activity_date" column and count the number of distinct "user_id" values for each day within the specified period.
+
+4. The expected output is a result table that contains the day and the count of active users on that day. The result table should only include days with at least one active user.
+
+
+Solutions :
+
+1. Using Group By
+
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM Activity
+WHERE (activity_date > "2019-06-27" AND activity_date <= "2019-07-27")
+GROUP BY activity_date;
+
+
+2. Using DateDiff
+
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM Activity
+WHERE DATEDIFF('2019-07-27',activity_date)<30 AND activity_date<='2019-07-27'
+GROUP BY activity_date;
