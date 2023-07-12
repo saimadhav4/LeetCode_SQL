@@ -1,0 +1,80 @@
+627. Swap Salary (https://leetcode.com/problems/swap-salary/?envType=list&envId=e97a9e5m)
+
+Table: Salary
+
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| id          | int      |
+| name        | varchar  |
+| sex         | ENUM     |
+| salary      | int      |
++-------------+----------+
+id is the primary key for this table.
+The sex column is ENUM value of type ('m', 'f').
+The table contains information about an employee.
+ 
+
+Write an SQL query to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temporary tables.
+
+Note that you must write a single update statement, do not write any select statement for this problem.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Salary table:
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
++----+------+-----+--------+
+Output: 
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
++----+------+-----+--------+
+Explanation: 
+(1, A) and (3, C) were changed from 'm' to 'f'.
+(2, B) and (4, D) were changed from 'f' to 'm'.
+
+
+Summary :
+
+1. We have a table called "Salary" that contains information about employees. The table has four columns: "id," "name," "sex," and "salary." Each row represents an employee and provides details such as the employee's ID, name, sex, and salary.
+
+2. The goal is to swap the values of the "sex" column, changing all 'f' (female) values to 'm' (male), and vice versa. We need to update the table in a single update statement without using any intermediate temporary tables.
+
+3. To solve the problem, we need to use an SQL update statement to modify the values in the "sex" column. We can use conditional logic to check the current value of each row and update it accordingly. In this case, we want to swap 'f' to 'm' and 'm' to 'f'.
+
+4. The expected output is the modified "Salary" table where all the 'f' and 'm' values in the "sex" column have been swapped. The table should remain the same except for the updated "sex" values.
+
+
+Solutions :
+
+1. Using Case 
+
+UPDATE salary SET sex =
+CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END
+
+
+2. Math
+
+UPDATE Salary SET sex = CHAR(ASCII('f') + ASCII('m') - ASCII(sex))
+
+3. Using if
+
+UPDATE Salary SET sex = IF(sex = 'm', 'f', 'm')
