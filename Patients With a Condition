@@ -48,6 +48,17 @@ Explanation: Bob and George both have a condition that starts with DIAB1.
 
 Summary :
 
+1. We have a table named Patients with three columns: patient_id, patient_name, and conditions. The patient_id is the primary key for this table.
+
+2. The conditions column contains zero or more codes separated by spaces. This table contains information about the patients in the hospital.
+
+3. The goal is to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. Type I Diabetes is identified by conditions that start with the prefix "DIAB1".
+
+4. We need to return the result table with the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. The result table can be in any order.
+
+
+Solutions :
+
 1. 
 SELECT * FROM Patients 
 WHERE conditions LIKE '% DIAB1%' OR conditions LIKE 'DIAB1%'
