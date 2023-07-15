@@ -1,0 +1,78 @@
+1148. Article Views I (https://leetcode.com/problems/article-views-i/?envType=list&envId=e97a9e5m)
+
+Table: Views
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| article_id    | int     |
+| author_id     | int     |
+| viewer_id     | int     |
+| view_date     | date    |
++---------------+---------+
+The table may have duplicate rows (In other words, there is no primary key for this table in SQL).
+Each row of this table indicates that some viewer viewed an article (written by some author) on some date. 
+Note that equal author_id and viewer_id indicate the same person.
+ 
+
+Find all the authors that viewed at least one of their own articles.
+
+Return the result table sorted by id in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Views table:
++------------+-----------+-----------+------------+
+| article_id | author_id | viewer_id | view_date  |
++------------+-----------+-----------+------------+
+| 1          | 3         | 5         | 2019-08-01 |
+| 1          | 3         | 6         | 2019-08-02 |
+| 2          | 7         | 7         | 2019-08-01 |
+| 2          | 7         | 6         | 2019-08-02 |
+| 4          | 7         | 1         | 2019-07-22 |
+| 3          | 4         | 4         | 2019-07-21 |
+| 3          | 4         | 4         | 2019-07-21 |
++------------+-----------+-----------+------------+
+Output: 
++------+
+| id   |
++------+
+| 4    |
+| 7    |
++------+
+
+
+Summary :
+
+1. We have a table called "Views" that contains information about viewers who viewed articles written by authors. The table has four columns: "article_id," "author_id," "viewer_id," and "view_date." Each row represents a view, indicating that a viewer (identified by viewer_id) viewed an article (identified by article_id) written by an author (identified by author_id) on a specific date (view_date).
+
+2. The goal is to find all the authors who have viewed at least one of their own articles. In other words, we need to identify the authors who have the same author_id and viewer_id, indicating that they viewed their own articles.
+
+3. To solve this problem, we will analyze the data in the "Views" table. We will compare the author_id and viewer_id values in each row to determine if they are the same, indicating that an author viewed their own article.
+
+4. The expected output is a result table containing the author_ids of authors who viewed their own articles. The result table should be sorted in ascending order based on the author_id.
+
+
+
+Solutions :
+
+1. Using Distinct
+
+SELECT DISTINCT author_id AS id
+FROM Views
+WHERE author_id = viewer_id
+ORDER BY author_id ASC;
+
+
+2. Without Distinct
+
+SELECT author_id AS id
+FROM Views
+WHERE Views.author_id = Views.viewer_id
+GROUP BY author_id
+ORDER BY author_id;
