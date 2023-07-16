@@ -1,0 +1,96 @@
+1873. Calculate Special Bonus (https://leetcode.com/problems/calculate-special-bonus/?envType=list&envId=e97a9e5m)
+
+Table: Employees
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| name        | varchar |
+| salary      | int     |
++-------------+---------+
+In SQL, employee_id is the primary key for this table.
+Each row of this table indicates the employee ID, employee name, and salary.
+ 
+
+Calculate the bonus of each employee. The bonus of an employee is 100% of their salary if the ID of the employee is an odd number and the employee name does not start with the character 'M'. The bonus of an employee is 0 otherwise.
+
+Return the result table ordered by employee_id.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++-------------+---------+--------+
+| employee_id | name    | salary |
++-------------+---------+--------+
+| 2           | Meir    | 3000   |
+| 3           | Michael | 3800   |
+| 7           | Addilyn | 7400   |
+| 8           | Juan    | 6100   |
+| 9           | Kannon  | 7700   |
++-------------+---------+--------+
+Output: 
++-------------+-------+
+| employee_id | bonus |
++-------------+-------+
+| 2           | 0     |
+| 3           | 0     |
+| 7           | 7400  |
+| 8           | 0     |
+| 9           | 7700  |
++-------------+-------+
+Explanation: 
+The employees with IDs 2 and 8 get 0 bonus because they have an even employee_id.
+The employee with ID 3 gets 0 bonus because their name starts with 'M'.
+The rest of the employees get a 100% bonus.
+
+
+Summary :
+
+1. We have a table called Employees with three columns: employee_id, name, and salary. The employee_id column is the primary key of the table.
+
+2. Each row in this table represents an employee and includes their employee ID, name, and salary.
+
+3. The goal is to calculate the bonus for each employee based on certain conditions.
+
+4. The bonus calculation rule is as follows: If the employee ID is an odd number and the employee name does not start with the character 'M', the bonus is 100% of their salary. Otherwise, the bonus is 0.
+
+5. To solve this, we need to write an SQL query that selects the employee_id column and calculates the bonus based on the given conditions.
+
+6. The result table should be ordered by the employee_id column.
+
+
+Solutions :
+
+1. 
+
+SELECT employee_id , salary * ( employee_id%2 ) * ( name NOT LIKE 'M%') AS bonus
+    FROM employees
+    ORDER BY employee_id;
+
+
+2. Using Case
+
+SELECT employee_id , 
+   CASE WHEN employee_id%2 <>0 AND name NOT LIKE 'M%' THEN salary 
+   ELSE 0
+   END AS bonus
+   FROM employees
+   ORDER BY employee_id;
+
+
+3. Using Union
+
+SELECT employee_id, salary AS 'bonus'
+FROM Employees
+WHERE employee_id % 2 = 1 AND name NOT LIKE 'M%'
+UNION
+SELECT employee_id, 0 AS 'bonus'
+FROM Employees
+WHERE employee_id % 2 = 0 OR name LIKE 'M%'
+ORDER BY employee_id
