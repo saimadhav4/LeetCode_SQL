@@ -1,0 +1,66 @@
+1683. Invalid Tweets (https://leetcode.com/problems/invalid-tweets/?envType=study-plan-v2&envId=top-sql-50)
+
+Table: Tweets
+
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| tweet_id       | int     |
+| content        | varchar |
++----------------+---------+
+In SQL, tweet_id is the primary key for this table.
+This table contains all the tweets in a social media app.
+ 
+
+Find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Tweets table:
++----------+----------------------------------+
+| tweet_id | content                          |
++----------+----------------------------------+
+| 1        | Vote for Biden                   |
+| 2        | Let us make America great again! |
++----------+----------------------------------+
+Output: 
++----------+
+| tweet_id |
++----------+
+| 2        |
++----------+
+Explanation: 
+Tweet 1 has length = 14. It is a valid tweet.
+Tweet 2 has length = 32. It is an invalid tweet.
+
+
+Summary :
+
+1. We have a table called "Tweets" with two columns: tweet_id and content.
+
+      a. The tweet_id column is the primary key for this table.
+      b. The content column contains the text content of each tweet.
+
+2. The goal is to find the IDs of the invalid tweets.
+
+      a.A tweet is considered invalid if the number of characters used in its content is strictly greater than 15.
+
+3. The output should be a result table containing the tweet IDs of the invalid tweets. The result table can be in any order.
+
+
+Solutions :
+
+1. Using Length
+
+SELECT tweet_id FROM tweets WHERE LENGTH(content)>15
+
+2.  Usng Char_Length
+
+SELECT tweet_id FROM tweets WHERE CHAR_LENGTH(content)>15
