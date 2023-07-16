@@ -1,0 +1,90 @@
+1795. Rearrange Products Table (https://leetcode.com/problems/rearrange-products-table/?envType=list&envId=e97a9e5m)
+
+Table: Products
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| product_id  | int     |
+| store1      | int     |
+| store2      | int     |
+| store3      | int     |
++-------------+---------+
+product_id is the primary key for this table.
+Each row in this table indicates the product's price in 3 different stores: store1, store2, and store3.
+If the product is not available in a store, the price will be null in that store's column.
+ 
+
+Rearrange the Products table so that each row has (product_id, store, price). If a product is not available in a store, do not include a row with that product_id and store combination in the result table.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Products table:
++------------+--------+--------+--------+
+| product_id | store1 | store2 | store3 |
++------------+--------+--------+--------+
+| 0          | 95     | 100    | 105    |
+| 1          | 70     | null   | 80     |
++------------+--------+--------+--------+
+Output: 
++------------+--------+-------+
+| product_id | store  | price |
++------------+--------+-------+
+| 0          | store1 | 95    |
+| 0          | store2 | 100   |
+| 0          | store3 | 105   |
+| 1          | store1 | 70    |
+| 1          | store3 | 80    |
++------------+--------+-------+
+Explanation: 
+Product 0 is available in all three stores with prices 95, 100, and 105 respectively.
+Product 1 is available in store1 with price 70 and store3 with price 80. The product is not available in store2.
+
+
+Summary :
+
+1. We have a table called Products with four columns: product_id, store1, store2, and store3. The product_id column is the primary key of the table.
+
+2. Each row in this table represents a product and its price in three different stores: store1, store2, and store3. The price of the product in a store is represented by the corresponding column value. If the product is not available in a store, the price will be null in that store's column.
+
+3. The goal is to rearrange the table so that each row represents a combination of product, store, and price. If a product is not available in a store, we should not include a row with that product and store combination in the result table.
+
+4. To solve this, we need to transform the table by creating new rows for each product and store combination, and populate the price column with the corresponding price from the original table.
+
+5. We can achieve this by using SQL queries to select the product_id and store columns, and use conditional logic to determine the price based on the non-null values in the store1, store2, and store3 columns.
+
+6. Finally, we return the result table in any order.
+
+
+Solutions :
+
+1. Using NOT NULL
+
+SELECT product_id, 'store1' AS store, store1 AS price
+FROM Products
+WHERE store1 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store2' AS store, store2 AS price
+FROM Products
+WHERE store2 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store3' AS store, store3 AS price
+FROM Products
+WHERE store3 IS NOT NULL
+
+2. Using Order By
+
+SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
+UNION 
+SELECT product_id, 'store2' AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL
+UNION 
+SELECT product_id, 'store3' AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL
+
+ORDER BY 1,2 ASC
