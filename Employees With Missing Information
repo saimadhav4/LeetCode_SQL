@@ -1,0 +1,109 @@
+1965. Employees With Missing Information (https://leetcode.com/problems/employees-with-missing-information/?envType=list&envId=e97a9e5m)
+
+Table: Employees
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| name        | varchar |
++-------------+---------+
+employee_id is the primary key for this table.
+Each row of this table indicates the name of the employee whose ID is employee_id.
+ 
+
+Table: Salaries
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| salary      | int     |
++-------------+---------+
+employee_id is the primary key for this table.
+Each row of this table indicates the salary of the employee whose ID is employee_id.
+ 
+
+Write an SQL query to report the IDs of all the employees with missing information. The information of an employee is missing if:
+
+The employee's name is missing, or
+The employee's salary is missing.
+Return the result table ordered by employee_id in ascending order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++-------------+----------+
+| employee_id | name     |
++-------------+----------+
+| 2           | Crew     |
+| 4           | Haven    |
+| 5           | Kristian |
++-------------+----------+
+Salaries table:
++-------------+--------+
+| employee_id | salary |
++-------------+--------+
+| 5           | 76071  |
+| 1           | 22517  |
+| 4           | 63539  |
++-------------+--------+
+Output: 
++-------------+
+| employee_id |
++-------------+
+| 1           |
+| 2           |
++-------------+
+Explanation: 
+Employees 1, 2, 4, and 5 are working at this company.
+The name of employee 1 is missing.
+The salary of employee 2 is missing.
+
+Summary :
+
+1. We have two tables: Employees and Salaries.
+
+      a. The Employees table has two columns: employee_id (primary key) and name.
+      b. The Salaries table also has two columns: employee_id (primary key) and salary.
+
+2. The goal is to write an SQL query that reports the IDs of employees with missing information.
+
+      a. An employee's information is considered missing if either their name is missing or their salary is missing.
+
+3. The result table should be ordered by employee_id in ascending order.
+
+4. To solve this, we need to compare the employee IDs in both tables and identify the employees with missing information.
+
+
+Solutions :
+
+1. Using NOT IN
+
+SELECT employee_id FROM Employees e 
+WHERE employee_id NOT IN (SELECT employee_id FROM Salaries)
+UNION 
+SELECT employee_id FROM Salaries s 
+WHERE employee_id NOT IN (SELECT employee_id FROM Employees)
+ORDER BY employee_id;
+
+
+2. Using IS NULL
+
+SELECT e.employee_id
+    FROM Employees e
+    LEFT JOIN Salaries s
+    using(employee_id)
+    WHERE salary IS NULL
+UNION ALL
+SELECT s.employee_id
+    FROM Employees e
+    RIGHT JOIN Salaries s
+    using(employee_id)
+    WHERE name IS NULL
+ORDER BY employee_id;
