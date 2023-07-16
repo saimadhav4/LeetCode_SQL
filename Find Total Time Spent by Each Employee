@@ -1,0 +1,82 @@
+1741. Find Total Time Spent by Each Employee (https://leetcode.com/problems/find-total-time-spent-by-each-employee/?envType=list&envId=e97a9e5m)
+
+
+Table: Employees
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| emp_id      | int  |
+| event_day   | date |
+| in_time     | int  |
+| out_time    | int  |
++-------------+------+
+In SQL, (emp_id, event_day, in_time) is the primary key of this table.
+The table shows the employees' entries and exits in an office.
+event_day is the day at which this event happened, in_time is the minute at which the employee entered the office, and out_time is the minute at which they left the office.
+in_time and out_time are between 1 and 1440.
+It is guaranteed that no two events on the same day intersect in time, and in_time < out_time.
+ 
+
+Calculate the total time in minutes spent by each employee on each day at the office. Note that within one day, an employee can enter and leave more than once. The time spent in the office for a single entry is out_time - in_time.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++--------+------------+---------+----------+
+| emp_id | event_day  | in_time | out_time |
++--------+------------+---------+----------+
+| 1      | 2020-11-28 | 4       | 32       |
+| 1      | 2020-11-28 | 55      | 200      |
+| 1      | 2020-12-03 | 1       | 42       |
+| 2      | 2020-11-28 | 3       | 33       |
+| 2      | 2020-12-09 | 47      | 74       |
++--------+------------+---------+----------+
+Output: 
++------------+--------+------------+
+| day        | emp_id | total_time |
++------------+--------+------------+
+| 2020-11-28 | 1      | 173        |
+| 2020-11-28 | 2      | 30         |
+| 2020-12-03 | 1      | 41         |
+| 2020-12-09 | 2      | 27         |
++------------+--------+------------+
+Explanation: 
+Employee 1 has three events: two on day 2020-11-28 with a total of (32 - 4) + (200 - 55) = 173, and one on day 2020-12-03 with a total of (42 - 1) = 41.
+Employee 2 has two events: one on day 2020-11-28 with a total of (33 - 3) = 30, and one on day 2020-12-09 with a total of (74 - 47) = 27.
+
+
+Summary :
+
+1. We have a table called Employees with four columns: emp_id, event_day, in_time, and out_time. The combination of emp_id, event_day, and in_time is the primary key of the table.
+
+2. The table represents the entries and exits of employees in an office. Each row corresponds to an event where an employee entered or left the office on a specific day. The in_time column represents the minute at which the employee entered, and the out_time column represents the minute at which they left. The event_day column stores the date of the event.
+
+3. The goal is to calculate the total time spent by each employee on each day in the office. The time spent is calculated as the difference between the out_time and in_time for each entry.
+
+4. To solve this, we need to group the rows by event_day and emp_id, and then calculate the total_time for each group by summing up the differences between out_time and in_time.
+
+5. Finally, we need to return the result table with columns day, emp_id, and total_time. The table should be sorted in any order.
+
+
+Solutions :
+
+1. 
+
+SELECT event_day AS day, emp_id, SUM(out_time - in_time) AS total_time
+FROM Employees
+GROUP BY day, emp_id;
+
+
+2. 
+
+SELECT event_day AS day, emp_id, SUM(out_time) - SUM(in_time) AS total_time
+FROM Employees
+GROUP BY day, emp_id;
