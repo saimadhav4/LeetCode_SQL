@@ -1,0 +1,78 @@
+570. Managers with at Least 5 Direct Reports (https://leetcode.com/problems/managers-with-at-least-5-direct-reports/?envType=study-plan-v2&envId=top-sql-50)
+
+
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| department  | varchar |
+| managerId   | int     |
++-------------+---------+
+In SQL, id is the primary key column for this table.
+Each row of this table indicates the name of an employee, their department, and the id of their manager.
+If managerId is null, then the employee does not have a manager.
+No employee will be the manager of themself.
+ 
+
+Find the managers with at least five direct reports.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++-----+-------+------------+-----------+
+| id  | name  | department | managerId |
++-----+-------+------------+-----------+
+| 101 | John  | A          | None      |
+| 102 | Dan   | A          | 101       |
+| 103 | James | A          | 101       |
+| 104 | Amy   | A          | 101       |
+| 105 | Anne  | A          | 101       |
+| 106 | Ron   | B          | 101       |
++-----+-------+------------+-----------+
+Output: 
++------+
+| name |
++------+
+| John |
++------+
+
+
+Summary :
+
+1. We have a table called "Employee" with columns: id, name, department, and managerId.
+
+      a. Each row represents an employee in the company.
+      b. The id column is the primary key of the table, uniquely identifying each employee.
+      c. The name column stores the name of the employee.
+      d. The department column indicates the department in which the employee works.
+      e. The managerId column contains the id of the employee's manager. If managerId is null, it means the employee does not have a manager.
+
+2. The goal is to find the managers who have at least five direct reports.
+
+      a. A direct report is an employee who has a manager and reports directly to them.
+      b. We need to identify the managers who have at least five employees reporting to them directly.
+
+3. The output should be a result table with a single column: name.
+
+      a. The name column represents the names of the managers with at least five direct reports.
+      b. The result table can be in any order.
+
+
+Solutions :
+
+SELECT m.name
+FROM employee AS e
+INNER JOIN employee AS m
+ON e.managerId=m.id
+GROUP BY e.managerId 
+HAVING COUNT(e.id)>=5
