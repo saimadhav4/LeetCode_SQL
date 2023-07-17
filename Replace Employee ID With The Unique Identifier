@@ -1,0 +1,104 @@
+1378. Replace Employee ID With The Unique Identifier (https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/?envType=study-plan-v2&envId=top-sql-50)
+
+
+Table: Employees
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| name          | varchar |
++---------------+---------+
+In SQL, id is the primary key for this table.
+Each row of this table contains the id and the name of an employee in a company.
+ 
+
+Table: EmployeeUNI
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| unique_id     | int     |
++---------------+---------+
+In SQL, (id, unique_id) is the primary key for this table.
+Each row of this table contains the id and the corresponding unique id of an employee in the company.
+ 
+
+Show the unique ID of each user, If a user does not have a unique ID replace just show null.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++----+----------+
+| id | name     |
++----+----------+
+| 1  | Alice    |
+| 7  | Bob      |
+| 11 | Meir     |
+| 90 | Winston  |
+| 3  | Jonathan |
++----+----------+
+EmployeeUNI table:
++----+-----------+
+| id | unique_id |
++----+-----------+
+| 3  | 1         |
+| 11 | 2         |
+| 90 | 3         |
++----+-----------+
+Output: 
++-----------+----------+
+| unique_id | name     |
++-----------+----------+
+| null      | Alice    |
+| null      | Bob      |
+| 2         | Meir     |
+| 3         | Winston  |
+| 1         | Jonathan |
++-----------+----------+
+Explanation: 
+Alice and Bob do not have a unique ID, We will show null instead.
+The unique ID of Meir is 2.
+The unique ID of Winston is 3.
+The unique ID of Jonathan is 1.
+
+
+Summary :
+
+1. We have two tables: "Employees" and "EmployeeUNI".
+
+      a. The "Employees" table contains two columns: id and name.
+            i. The id column is the primary key for this table.
+            ii. The name column contains the names of the employees in the company.
+      b. The "EmployeeUNI" table contains two columns: id and unique_id.
+            i. The (id, unique_id) pair is the primary key for this table.
+            ii. The id column corresponds to the id of an employee from the "Employees" table.
+            iii. The unique_id column contains the unique IDs assigned to some of the employees.
+
+2. The goal is to show the unique ID of each employee. If an employee does not have a unique ID, we should show null instead.
+
+3. The output should be a result table with two columns: unique_id and name.
+
+      a. The unique_id column should contain the unique IDs of the employees or null values.
+      b. The name column should contain the names of the employees.
+
+
+Solutions :
+
+1. 
+SELECT eu.unique_id , e.name 
+FROM Employees e  
+LEFT JOIN EmployeeUNI eu USING(id)
+
+2. 
+SELECT EmployeeUNI.unique_id, Employees.name
+FROM Employees
+LEFT JOIN EmployeeUNI ON Employees.id = EmployeeUNI.id;
