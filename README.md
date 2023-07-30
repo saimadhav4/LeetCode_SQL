@@ -1,5 +1,4 @@
-# LeetCode SQL Questions includes SQL 50 and SQL must 45
-
+LeetCode SQL Questions
 This repository contains SQL questions available on LeetCode. You can find the questions at LeetCode SQL Problems. LeetCode SQL 50
 
 File Format
@@ -14,4 +13,3 @@ A brief summary of the problem statement.
 
 Solutions
 Solutions to the problem implemented using different approaches
-
