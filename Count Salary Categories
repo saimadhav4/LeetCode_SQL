@@ -1,0 +1,119 @@
+1907. Count Salary Categories (https://leetcode.com/problems/count-salary-categories/?envType=study-plan-v2&envId=top-sql-50)
+
+Table: Accounts
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| account_id  | int  |
+| income      | int  |
++-------------+------+
+In SQL, account_id is the primary key for this table.
+Each row contains information about the monthly income for one bank account.
+ 
+
+Calculate the number of bank accounts of each salary category. The salary categories are:
+
+"Low Salary": All the salaries strictly less than $20000.
+"Average Salary": All the salaries in the inclusive range [$20000, $50000].
+"High Salary": All the salaries strictly greater than $50000.
+The result table must contain all three categories. If there are no accounts in a category, return 0.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Accounts table:
++------------+--------+
+| account_id | income |
++------------+--------+
+| 3          | 108939 |
+| 2          | 12747  |
+| 8          | 87709  |
+| 6          | 91796  |
++------------+--------+
+Output: 
++----------------+----------------+
+| category       | accounts_count |
++----------------+----------------+
+| Low Salary     | 1              |
+| Average Salary | 0              |
+| High Salary    | 3              |
++----------------+----------------+
+Explanation: 
+Low Salary: Account 2.
+Average Salary: No accounts.
+High Salary: Accounts 3, 6, and 8.
+
+
+Summary :
+
+1. Table Overview: You are given a table named "Accounts" that contains information about monthly incomes for different bank accounts. The table has the following columns:
+
+      account_id (integer): The unique ID of each bank account.
+      income (integer): The monthly income for each bank account.
+
+2. Salary Categories: The task is to calculate the number of bank accounts falling into different salary categories. The salary categories are defined as follows:
+
+      "Low Salary": All incomes strictly less than $20,000.
+      "Average Salary": All incomes in the inclusive range of $20,000 to $50,000.
+      "High Salary": All incomes strictly greater than $50,000.
+
+3. Counting Accounts: Your goal is to count the number of bank accounts that fall into each of these salary categories. You need to examine the income column for each account 
+and determine which category it belongs to based on the income value.
+
+4. Output Format: The output of the SQL query should be a result table that contains three rows, each representing a salary category. The columns should be labeled as "category" 
+and "accounts_count," where "category" contains the name of the salary category, and "accounts_count" contains the count of bank accounts that belong to that category. If there 
+are no accounts in a particular category, the count for that category should be 0.
+
+
+Solutions :
+
+1. Using Union
+
+# Write your MySQL query statement below
+SELECT "Low Salary" as category,
+Count(income) as accounts_count
+FROM Accounts
+WHERE income < 20000
+
+UNION
+
+SELECT "Average Salary" as category,
+Count(income) as accounts_count
+FROM Accounts
+WHERE income >= 20000 && income <= 50000
+
+UNION
+
+SELECT "High Salary" as category,
+Count(income) as accounts_count
+FROM Accounts
+WHERE income > 50000;
+
+2. Using Union All and Left Join
+
+SELECT
+    c.category
+    , COUNT(a.income) AS accounts_count
+FROM
+    (
+        SELECT 'Low Salary' AS category
+        UNION ALL
+        SELECT 'Average Salary' AS category
+        UNION ALL
+        SELECT 'High Salary' AS category
+    ) c
+LEFT JOIN
+    accounts a ON (
+        (c.category = 'Low Salary' AND a.income < 20000) OR
+        (c.category = 'Average Salary' AND a.income >= 20000 AND a.income <= 50000) OR
+        (c.category = 'High Salary' AND a.income > 50000)
+    )
+GROUP BY
+    c.category
