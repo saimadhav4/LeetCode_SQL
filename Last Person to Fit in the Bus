@@ -1,0 +1,107 @@
+1204. Last Person to Fit in the Bus (https://leetcode.com/problems/last-person-to-fit-in-the-bus/?envType=study-plan-v2&envId=top-sql-50)
+
+
+Table: Queue
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| person_id   | int     |
+| person_name | varchar |
+| weight      | int     |
+| turn        | int     |
++-------------+---------+
+person_id is the primary key column for this table.
+This table has the information about all people waiting for a bus.
+The person_id and turn columns will contain all numbers from 1 to n, where n is the number of rows in the table.
+turn determines the order of which the people will board the bus, where turn=1 denotes the first person to board and turn=n denotes the last person to board.
+weight is the weight of the person in kilograms.
+ 
+
+There is a queue of people waiting to board a bus. However, the bus has a weight limit of 1000 kilograms, so there may be some people who cannot board.
+
+Write an SQL query to find the person_name of the last person that can fit on the bus without exceeding the weight limit. The test cases are generated such that the first person does not exceed the weight limit.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Queue table:
++-----------+-------------+--------+------+
+| person_id | person_name | weight | turn |
++-----------+-------------+--------+------+
+| 5         | Alice       | 250    | 1    |
+| 4         | Bob         | 175    | 5    |
+| 3         | Alex        | 350    | 2    |
+| 6         | John Cena   | 400    | 3    |
+| 1         | Winston     | 500    | 6    |
+| 2         | Marie       | 200    | 4    |
++-----------+-------------+--------+------+
+Output: 
++-------------+
+| person_name |
++-------------+
+| John Cena   |
++-------------+
+Explanation: The folowing table is ordered by the turn for simplicity.
++------+----+-----------+--------+--------------+
+| Turn | ID | Name      | Weight | Total Weight |
++------+----+-----------+--------+--------------+
+| 1    | 5  | Alice     | 250    | 250          |
+| 2    | 3  | Alex      | 350    | 600          |
+| 3    | 6  | John Cena | 400    | 1000         | (last person to board)
+| 4    | 2  | Marie     | 200    | 1200         | (cannot board)
+| 5    | 4  | Bob       | 175    | ___          |
+| 6    | 1  | Winston   | 500    | ___          |
++------+----+-----------+--------+--------------+
+
+
+
+
+Summary :
+
+1. Table Overview: You are given a table named "Queue" that contains information about people waiting in a queue to board a bus. The table has the following columns:
+
+      person_id (integer): The unique ID of each person in the queue.
+      person_name (varchar): The name of the person.
+      weight (integer): The weight of the person in kilograms.
+      turn (integer): The order in which the person will board the bus, where 1 denotes the first person to board, and n denotes the last person to board.
+
+2. Bus Weight Limit: The bus has a weight limit of 1000 kilograms, which means there's a maximum weight capacity that the bus can carry.
+
+3. Finding the Last Person to Board: Your task is to write an SQL query to find the name of the last person that can fit on the bus without exceeding the weight limit. The queue is already ordered by the turn column, so the person with the highest turn number will be the last to board.
+
+4. Boarding Consideration: You need to consider the order of the queue and the weight of each person to determine who can board the bus. Starting from the first person in the queue (turn=1), you will calculate the total weight of people boarding the bus in the given order. Once the total weight exceeds 1000 kilograms, the last person in the queue whose weight is within the limit will be the last person to board.
+
+5. Output Format: The output of the SQL query should be the name of the last person who can fit on the bus without exceeding the weight limit.
+
+
+Solutions :
+
+1. Using JOIN
+
+SELECT 
+    q1.person_name
+FROM Queue q1 
+JOIN Queue q2 ON q1.turn >= q2.turn
+GROUP BY q1.turn
+HAVING SUM(q2.weight) <= 1000
+ORDER BY SUM(q2.weight) DESC
+LIMIT 1
+
+2. Using Window function and Sum
+
+WITH CTE AS (
+    SELECT 
+        turn, person_name, weight,
+        SUM(weight) OVER(ORDER BY turn ASC) AS tot_weight 
+    FROM Queue
+    ORDER BY turn
+)
+SELECT person_name
+FROM Queue q
+WHERE q.turn = (SELECT MAX(turn) FROM CTE WHERE tot_weight <= 1000);
+2. 
