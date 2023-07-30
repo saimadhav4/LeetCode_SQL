@@ -92,7 +92,7 @@ HAVING SUM(q2.weight) <= 1000
 ORDER BY SUM(q2.weight) DESC
 LIMIT 1
 
-2. Using Window function and Sum
+2. Using Window function
 
 WITH CTE AS (
     SELECT 
