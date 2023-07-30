@@ -1,0 +1,82 @@
+610. Triangle Judgement
+
+
+Table: Triangle
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| x           | int  |
+| y           | int  |
+| z           | int  |
++-------------+------+
+(x, y, z) is the primary key column for this table.
+Each row of this table contains the lengths of three line segments.
+ 
+
+Write an SQL query to report for every three line segments whether they can form a triangle.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Triangle table:
++----+----+----+
+| x  | y  | z  |
++----+----+----+
+| 13 | 15 | 30 |
+| 10 | 20 | 15 |
++----+----+----+
+Output: 
++----+----+----+----------+
+| x  | y  | z  | triangle |
++----+----+----+----------+
+| 13 | 15 | 30 | No       |
+| 10 | 20 | 15 | Yes      |
++----+----+----+----------+
+
+
+Summary :
+
+1. Table Overview: You are given a table called "Triangle" with three columns:
+
+      x (integer): The length of the first line segment.
+      y (integer): The length of the second line segment.
+      z (integer): The length of the third line segment.
+      (x, y, z) is the primary key column for this table.
+
+2. Objective: The task is to write an SQL query that determines whether every three line segments in the "Triangle" table can form a triangle.
+
+3. Triangle Formation Rule: In geometry, for three line segments to form a triangle, the sum of the lengths of any two sides must be greater than the length of the third side. In other words, for three line segments with lengths x, y, and z to form a triangle, the following conditions must be met:
+
+      x + y > z
+      x + z > y
+      y + z > x
+
+4. Output Format: The output should be a result table with four columns:
+
+      x (integer): The length of the first line segment.
+      y (integer): The length of the second line segment.
+      z (integer): The length of the third line segment.
+      triangle (varchar): A column indicating whether the three line segments can form a triangle. The values should be "Yes" or "No."
+
+
+Solutions :
+
+1. Using Case, When
+
+SELECT x,y,z, 
+    CASE WHEN x+y>z AND x+z>y AND y+z>x 
+    then 'Yes' 
+    ELSE 'No' 
+    END as triangle 
+FROM triangle;
+
+2. Using IF
+
+SELECT *, IF(x+y>z and y+z>x and z+x>y, "Yes", "No") as triangle FROM triangle
