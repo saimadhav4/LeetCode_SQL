@@ -1,6 +1,6 @@
 # LeetCode SQL Questions
 
-This repository contains SQL questions available on LeetCode. You can find the questions at [LeetCode SQL Problems](https://leetcode.com/list/e97a9e5m/).
+This repository contains SQL questions available on LeetCode. You can find the questions at [LeetCode SQL Problems](https://leetcode.com/list/e97a9e5m/). [LeetCode SQL 50] (https://leetcode.com/studyplan/top-sql-50/)
 
 ## File Format
 
