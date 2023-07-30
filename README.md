@@ -1,22 +1,17 @@
-# LeetCode SQL Questions
+# LeetCode SQL Questions includes SQL 50 and SQL must 45
 
-This repository contains SQL questions available on LeetCode. You can find the questions at [LeetCode SQL Problems](https://leetcode.com/list/e97a9e5m/). [LeetCode SQL 50] (https://leetcode.com/studyplan/top-sql-50/)
+This repository contains SQL questions available on LeetCode. You can find the questions at LeetCode SQL Problems. LeetCode SQL 50
 
-## File Format
-
+File Format
 Each problem is organized in the following format:
 
-### Problem Number. Problem Title (Problem URL)
-
-#### Problem Statement
-
+Problem Number. Problem Title (Problem URL)
+Problem Statement
 [Link to Problem Statement](Problem URL)
 
-#### Summary
-
+Summary
 A brief summary of the problem statement.
 
-#### Solutions
-
+Solutions
 Solutions to the problem implemented using different approaches
 
